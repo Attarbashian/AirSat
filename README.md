@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="AirSat.jpg" width="220">
+  <img src="AirSat.jpg" width="500">
 </p>
 
 <p align="center">
