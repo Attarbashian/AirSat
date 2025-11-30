@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://s34.picofile.com/file/8488329726/AirSat.jpg" width="220">
+  <img src="AirSat.jpg" width="220">
 </p>
+
 
 <p align="center">
   <span style="font-size: 26px; font-weight: bold;">AirSat Documentation</span>
