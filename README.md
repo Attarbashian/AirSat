@@ -1,8 +1,6 @@
 <p align="center">
-  <img src="AirSat.jpg" width="600">
+  <img src="AirSat.jpg" width="220">
 </p>
-
-
 
 <p align="center">
   <span style="font-size: 26px; font-weight: bold;">AirSat Documentation</span>
@@ -28,7 +26,10 @@ The system processes Sentinel-5P satellite data **from the beginning of the miss
 ---
 
 ## 🔗 Live Demo (English)
-https://attarbashian.users.earthengine.app/view/eairsat
+
+<a href="https://attarbashian.users.earthengine.app/view/eairsat" target="_blank">
+  https://attarbashian.users.earthengine.app/view/eairsat
+</a>
 
 ---
 
@@ -78,7 +79,10 @@ Built on **Google Earth Engine**, it provides scalable, fast, and reproducible w
 ---
 
 ## 🟢 نسخه آنلاین (فارسی)
-https://attarbashian.users.earthengine.app/view/airsat
+
+<a href="https://attarbashian.users.earthengine.app/view/airsat" target="_blank">
+  https://attarbashian.users.earthengine.app/view/airsat
+</a>
 
 ---
 
