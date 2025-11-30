@@ -2,6 +2,7 @@
   <img src="AirSat.jpg" width="600">
 </p>
 
+---
 
 <p align="center">
   <span style="font-size: 26px; font-weight: bold;">AirSat Documentation</span>
