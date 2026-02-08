@@ -3,268 +3,1044 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AirSat — Satellite-Based Air Quality Monitoring (Iran)</title>
-  <meta name="description" content="AirSat is a satellite-driven platform for monitoring and analyzing air pollution across Iran using Sentinel-5P and Google Earth Engine. Bilingual (EN/FA)." />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <title>AirSat — Satellite-Based Air Pollution Monitoring System for Iran</title>
+  <meta name="description" content="AirSat is a dynamic satellite-based air pollution monitoring system for Iran built on Sentinel-5P (Level-3, OFFL) data (2018–present). Interactive maps, hotspots, charts, and direct downloads. Fully bilingual (EN/FA)." />
 
   <!-- Search Console (already verified; keep if you want) -->
   <meta name="google-site-verification" content="tOP_Xt49kmM6PbEaEkpnwRIb9jQ1bvMHb_bThp8Fv2I" />
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="AirSat — Satellite-Based Air Quality Monitoring" />
-  <meta property="og:description" content="Interactive satellite-based air quality monitoring across Iran. Built on Google Earth Engine. EN/FA." />
+  <!-- Open Graph / Twitter -->
+  <meta property="og:title" content="AirSat — Satellite-Based Air Pollution Monitoring" />
+  <meta property="og:description" content="Satellite-based air pollution monitoring for Iran (Sentinel-5P, 2018–present). Maps, hotspots, charts, downloads. EN/FA." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="AirSat.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Vazirmatn (Persian) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #0b1220;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.10);
+      --bg: #070b16;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.09);
+      --border: rgba(255,255,255,.14);
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.70);
-      --border: rgba(255,255,255,.14);
-      --shadow: 0 20px 60px rgba(0,0,0,.45);
-      --radius: 16px;
-      --max: 1040px;
+
+      --a1: rgba(56,189,248,.92);
+      --a2: rgba(34,197,94,.92);
+      --a3: rgba(168,85,247,.92);
+
+      --shadow: 0 22px 70px rgba(0,0,0,.55);
+      --r16: 16px;
+      --r20: 20px;
+      --max: 1120px;
+
+      --font-en: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --font-fa: Vazirmatn, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+      --ease: cubic-bezier(.2,.9,.2,1);
+      --t: 160ms var(--ease);
     }
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body{
       margin:0;
       color: var(--text);
       background:
-        radial-gradient(900px 420px at 20% 0%, rgba(56,189,248,.18), transparent 60%),
-        radial-gradient(900px 420px at 80% 10%, rgba(34,197,94,.14), transparent 55%),
-        radial-gradient(700px 380px at 50% 80%, rgba(168,85,247,.10), transparent 60%),
+        radial-gradient(980px 480px at 15% 0%, rgba(56,189,248,.16), transparent 60%),
+        radial-gradient(920px 460px at 85% 10%, rgba(34,197,94,.12), transparent 55%),
+        radial-gradient(760px 420px at 55% 88%, rgba(168,85,247,.11), transparent 60%),
+        radial-gradient(520px 280px at 18% 75%, rgba(56,189,248,.10), transparent 60%),
         var(--bg);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      line-height:1.7;
+      font-family: var(--font-en);
+      line-height: 1.7;
+      letter-spacing: -0.01em;
+      overflow-x: hidden;
     }
 
-    a{ color: inherit; }
-    .wrap{ max-width: var(--max); margin: 0 auto; padding: 28px 18px 60px; }
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible { outline: 2px solid rgba(56,189,248,.55); outline-offset: 3px; border-radius: 10px; }
 
-    .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding: 10px 12px;
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 18px 18px 76px; }
+
+    .grid-bg{
+      position: fixed; inset: 0; pointer-events:none; opacity: .22;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 70px 70px;
+      mask-image: radial-gradient(circle at 40% 10%, black 0%, transparent 70%);
+    }
+
+    /* Navbar */
+    .nav{
+      position: sticky; top: 10px; z-index: 30;
+      display:flex; align-items:center; justify-content:space-between; gap: 10px;
+      padding: 10px 12px;
       border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
       border-radius: 999px;
-      backdrop-filter: blur(10px);
+      background: rgba(255,255,255,.05);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
     }
+    .brand{
+      display:flex; align-items:center; gap:10px; padding: 6px 10px; border-radius: 999px;
+    }
+    .brand:hover{ background: rgba(255,255,255,.05); }
+    .mark{
+      width: 28px; height: 28px; border-radius: 10px;
+      background:
+        radial-gradient(12px 12px at 30% 30%, rgba(255,255,255,.22), transparent 60%),
+        linear-gradient(135deg, rgba(56,189,248,.35), rgba(34,197,94,.18));
+      border: 1px solid rgba(56,189,248,.25);
+      box-shadow: 0 0 22px rgba(56,189,248,.16);
+    }
+    .brand .t{
+      display:flex; flex-direction:column; line-height: 1.1;
+    }
+    .brand .t b{ letter-spacing: -0.02em; }
+    .brand .t span{ font-size: 12px; color: var(--muted); }
 
-    .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
-    .dot{ width:10px; height:10px; border-radius:50%; background: rgba(56,189,248,.95); box-shadow: 0 0 22px rgba(56,189,248,.75); }
-    .brand b{ letter-spacing:.2px; }
+    .navlinks{
+      display:flex; gap: 6px; align-items:center;
+      color: var(--muted); font-size: 14px;
+    }
+    .navlinks a{
+      padding: 8px 10px; border-radius: 999px;
+      border: 1px solid transparent;
+      transition: background var(--t), border-color var(--t), transform var(--t), color var(--t);
+    }
+    .navlinks a:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.12);
+      color: var(--text);
+      transform: translateY(-1px);
+    }
 
     .lang{
-      display:flex; gap:10px; align-items:center;
-      font-size: 14px; color: var(--muted);
+      display:flex; gap: 6px; align-items:center;
     }
-    .lang a{ text-decoration:none; padding:6px 10px; border-radius:999px; border:1px solid transparent; }
-    .lang a:hover{ border-color: var(--border); background: rgba(255,255,255,.05); color: var(--text); }
-
-    header{ margin-top: 28px; display:grid; grid-template-columns: 1.2fr .8fr; gap: 22px; align-items:center; }
-    @media (max-width: 900px){ header{ grid-template-columns: 1fr; } }
-
-    .hero{
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding: 18px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-    }
-    .kicker{ color: var(--muted); font-size: 14px; }
-    h1{ margin: 8px 0 10px; font-size: clamp(28px, 4vw, 44px); line-height: 1.15; }
-    .sub{ color: var(--muted); margin: 0 0 16px; max-width: 65ch; }
-
-    .btns{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
-    .btn{
+    .pill{
       display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding: 10px 14px;
+      gap: 8px;
+      padding: 8px 12px;
       border-radius: 999px;
-      border: 1px solid var(--border);
-      text-decoration:none;
-      background: rgba(255,255,255,.06);
-      transition: transform .12s ease, background .12s ease, border-color .12s ease;
-      font-weight: 600;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+      color: var(--muted);
+      font-size: 14px;
+      transition: background var(--t), border-color var(--t), transform var(--t), color var(--t);
+      cursor: pointer;
+      user-select: none;
     }
-    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
-    .btn.primary{ background: rgba(56,189,248,.18); border-color: rgba(56,189,248,.35); }
-    .btn.primary:hover{ background: rgba(56,189,248,.24); }
+    .pill:hover{ transform: translateY(-1px); background: rgba(255,255,255,.07); color: var(--text); }
+    .pill.active{
+      color: var(--text);
+      background: rgba(56,189,248,.14);
+      border-color: rgba(56,189,248,.34);
+    }
 
-    .shot{
-      border: 1px solid var(--border);
-      background: rgba(255,255,255,.03);
-      border-radius: var(--radius);
+    .menuBtn{ display:none; }
+    @media (max-width: 880px){
+      .navlinks{ display:none; }
+      .menuBtn{ display:inline-flex; }
+    }
+
+    /* Mobile drawer */
+    .drawer{
+      display:none;
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 18px;
+      background: rgba(255,255,255,.05);
       padding: 10px;
+    }
+    .drawer a{ display:block; padding: 10px 12px; border-radius: 12px; color: var(--muted); }
+    .drawer a:hover{ background: rgba(255,255,255,.06); color: var(--text); }
+    .drawer.open{ display:block; }
+
+    /* Hero */
+    .hero{
+      margin-top: 18px;
+      border-radius: var(--r20);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
       box-shadow: var(--shadow);
       overflow:hidden;
+      position: relative;
     }
-    .shot img{ width:100%; height:auto; display:block; border-radius: 12px; }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(480px 220px at 20% 20%, rgba(56,189,248,.18), transparent 60%),
+        radial-gradient(520px 240px at 78% 15%, rgba(34,197,94,.12), transparent 60%),
+        radial-gradient(540px 260px at 55% 90%, rgba(168,85,247,.10), transparent 60%);
+      pointer-events:none;
+    }
+    .hero-inner{
+      position: relative;
+      padding: 22px;
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 16px;
+      align-items: center;
+    }
+    @media (max-width: 980px){
+      .hero-inner{ grid-template-columns: 1fr; }
+    }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+      font-size: 13px;
+      width: fit-content;
+    }
+    .spark{
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(56,189,248,.95);
+      box-shadow: 0 0 18px rgba(56,189,248,.55);
+    }
+
+    h1{
+      margin: 10px 0 10px;
+      font-size: clamp(30px, 4.4vw, 54px);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+    .lead{
+      color: var(--muted);
+      max-width: 78ch;
+      margin: 0 0 14px;
+      font-size: 16px;
+    }
+
+    .cta{
+      display:flex; flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      transition: transform var(--t), background var(--t), border-color var(--t);
+      font-weight: 600;
+      font-size: 14px;
+      cursor:pointer;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.20); }
+    .btn.primary{
+      background: rgba(56,189,248,.15);
+      border-color: rgba(56,189,248,.35);
+    }
+    .btn.primary:hover{ background: rgba(56,189,248,.22); }
+    .btn.ghost{ background: transparent; }
+    .btn.small{ padding: 8px 12px; font-size: 13px; }
+
+    .meta-row{
+      display:flex; flex-wrap:wrap; gap: 8px 12px;
+      align-items:center;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .meta-row b{ color: rgba(255,255,255,.85); font-weight: 600; }
+
+    .shot{
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--r16);
+      padding: 10px;
+      overflow: hidden;
+    }
+    .shot img{
+      width: 100%;
+      height: auto;
+      display:block;
+      border-radius: 12px;
+      transform: translateZ(0);
+    }
+    .shot .cap{
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Sections */
+    .section{
+      margin-top: 18px;
+      border-radius: var(--r20);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      padding: 18px;
+    }
+    .section h2{
+      margin: 0 0 8px;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    .section p{ margin: 0; color: var(--muted); }
 
     .grid{
-      margin-top: 18px;
+      margin-top: 14px;
       display:grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
+      gap: 12px;
     }
     .card{
       grid-column: span 6;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding: 16px;
-      backdrop-filter: blur(10px);
+      border-radius: var(--r16);
+      padding: 14px;
+      transition: transform var(--t), background var(--t), border-color var(--t);
     }
-    @media (max-width: 900px){ .card{ grid-column: span 12; } }
+    .card:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.18);
+    }
+    @media (max-width: 920px){
+      .card{ grid-column: span 12; }
+    }
+    .card h3{
+      margin: 0 0 6px;
+      font-size: 16px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .card p{ margin: 0; color: var(--muted); font-size: 14px; }
 
-    .card h2{ margin: 0 0 8px; font-size: 18px; }
-    .card p{ margin: 0; color: var(--muted); }
-    ul{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); }
-    li{ margin: 4px 0; }
+    .list{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .list li{ margin: 6px 0; }
+
+    .ico{ width: 18px; height: 18px; display:inline-block; opacity: .95; }
+
+    /* Language blocks */
+    .langBlock{ display:none; }
+    .langBlock.active{ display:block; }
+
+    /* Persian */
+    .fa, .fa * { font-family: var(--font-fa); }
+    .fa { direction: rtl; text-align: right; }
+    .fa .list{ padding-right: 18px; padding-left: 0; }
+
+    /* Citation box */
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 12.8px;
+    }
+    .citebox{
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 12px;
+      overflow:auto;
+      color: rgba(255,255,255,.84);
+      white-space: pre-wrap;
+    }
+    .row{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      margin-top: 10px;
+    }
+    .hint{ color: var(--muted); font-size: 13px; margin-top: 8px; }
+
+    details{
+      margin-top: 10px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.03);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+    summary{
+      cursor: pointer;
+      color: rgba(255,255,255,.88);
+      font-weight: 700;
+      list-style: none;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    .details-body{ margin-top: 8px; color: var(--muted); font-size: 14px; }
+
+    .toast{
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.88);
+      font-size: 13px;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+      z-index: 60;
+    }
+    .toast.show{ opacity: 1; transform: translateX(-50%) translateY(-2px); }
 
     footer{
-      margin-top: 26px;
+      margin-top: 18px;
+      text-align:center;
       color: var(--muted);
       font-size: 13px;
-      text-align:center;
+      padding: 18px 6px 0;
     }
 
-    /* Persian section */
-    .fa{
-      font-family: "Vazirmatn", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      direction: rtl;
-      text-align: right;
+    .fadeIn{ animation: fadeIn .55s var(--ease) both; }
+    @keyframes fadeIn{
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-    .fa h2, .fa h3{ letter-spacing: 0; }
-    .fa ul{ padding-right: 18px; padding-left: 0; }
   </style>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":["SoftwareApplication","ResearchProject"],
+    "name":"AirSat",
+    "description":"Dynamic satellite-based air pollution monitoring system for Iran built on Sentinel-5P (Level-3, OFFL) data (2018–present).",
+    "applicationCategory":"ScientificApplication",
+    "operatingSystem":"Web",
+    "image":"AirSat.jpg",
+    "author":{"@type":"Person","name":"Vahid Attarbashian"},
+    "url":"https://attarbashian.github.io/AirSat/",
+    "sameAs":["https://github.com/Attarbashian/AirSat","https://doi.org/10.5281/zenodo.185525599"]
+  }
+  </script>
 </head>
 
 <body>
+  <div class="grid-bg"></div>
+
   <div class="wrap">
-    <div class="topbar">
+    <!-- NAV -->
+    <div class="nav fadeIn" id="top">
       <a class="brand" href="#top">
-        <span class="dot"></span>
-        <b>AirSat</b>
+        <span class="mark"></span>
+        <span class="t">
+          <b>AirSat</b>
+          <span id="brandSub">Satellite air quality monitoring (Iran)</span>
+        </span>
       </a>
 
-      <nav class="lang">
-        <a href="#english">🇬🇧 English</a>
-        <a href="#persian">🇮🇷 فارسی</a>
-      </nav>
+      <div class="navlinks" aria-label="Primary navigation">
+        <a href="#overview" id="navOverview">Overview</a>
+        <a href="#features" id="navFeatures">Features</a>
+        <a href="#demos" id="navDemos">Live demos</a>
+        <a href="#cite" id="navCite">Cite</a>
+        <a href="#about" id="navAbout">About</a>
+      </div>
+
+      <div class="lang" aria-label="Language switch">
+        <button class="pill active" type="button" id="btnEN" aria-pressed="true">🇬🇧 EN</button>
+        <button class="pill" type="button" id="btnFA" aria-pressed="false">🇮🇷 FA</button>
+        <button class="pill menuBtn" type="button" id="menuBtn" aria-label="Menu">☰</button>
+      </div>
     </div>
 
-    <header id="top">
-      <div class="hero">
-        <div class="kicker">Satellite-Based Air Quality Monitoring Platform</div>
-        <h1>AirSat — Interactive air pollution monitoring across Iran</h1>
-        <p class="sub">
-          AirSat is a nationwide satellite-driven platform for visualizing and analyzing atmospheric pollutants
-          across all regions of Iran. Built on Google Earth Engine and Sentinel-5P.
-        </p>
+    <div class="drawer" id="drawer" aria-label="Mobile menu">
+      <a href="#overview" id="drawerOverview">Overview</a>
+      <a href="#features" id="drawerFeatures">Features</a>
+      <a href="#demos" id="drawerDemos">Live demos</a>
+      <a href="#cite" id="drawerCite">Cite</a>
+      <a href="#about" id="drawerAbout">About</a>
+    </div>
 
-        <div class="btns">
-          <a class="btn primary" href="https://attarbashian.users.earthengine.app/view/eairsat" target="_blank" rel="noopener">
-            Live Demo (English)
-          </a>
-          <a class="btn" href="https://attarbashian.users.earthengine.app/view/airsat" target="_blank" rel="noopener">
-            نسخه آنلاین (فارسی)
-          </a>
-          <a class="btn" href="https://github.com/Attarbashian/AirSat" target="_blank" rel="noopener">
-            GitHub Repository
-          </a>
+    <!-- HERO -->
+    <section class="hero fadeIn" aria-label="Hero">
+      <div class="hero-inner">
+        <div>
+          <div class="badge">
+            <span class="spark"></span>
+            <span id="badgeText">Nationwide, satellite-driven • Built on Google Earth Engine</span>
+          </div>
+
+          <!-- EN -->
+          <div class="langBlock active" id="blockEN">
+            <h1>AirSat — Satellite-based air pollution monitoring for Iran</h1>
+            <p class="lead">
+              AirSat is a dynamic satellite-based air pollution monitoring system for Iran, built on Sentinel-5P
+              (Level-3, OFFL) data from 2018 onwards. For a user-selected time window, it computes temporal means and visualizes
+              them as maps and charts.
+            </p>
+
+            <div class="cta" id="demos">
+              <a class="btn primary" href="https://attarbashian.users.earthengine.app/view/eairsat" target="_blank" rel="noopener">
+                Live Demo (English)
+              </a>
+
+              <a class="btn" href="https://attarbashian.users.earthengine.app/view/airsat" target="_blank" rel="noopener">
+                Persian Demo
+              </a>
+
+              <a class="btn ghost" href="https://github.com/Attarbashian/AirSat" target="_blank" rel="noopener">
+                GitHub Repository
+              </a>
+
+              <a class="btn" href="https://doi.org/10.5281/zenodo.185525599" target="_blank" rel="noopener" aria-label="DOI">
+                <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.185525599.svg" alt="DOI" style="height:18px; width:auto;">
+              </a>
+
+              <a class="btn" href="mailto:attarbashian@gmail.com">
+                Contact
+              </a>
+            </div>
+
+            <div class="meta-row">
+              <span>Designed & implemented by <b>Vahid Attarbashian</b></span>
+              <span>•</span>
+              <span>Part of a broader PhD research project</span>
+            </div>
+          </div>
+
+          <!-- FA -->
+          <div class="langBlock fa" id="blockFA">
+            <h1>ایرسات — پایش ماهواره‌ای آلودگی هوا برای ایران</h1>
+            <p class="lead">
+              ایرسات یک سامانه پویا برای پایش آلودگی هوا در ایران است که بر پایه داده‌های Sentinel-5P (Level-3, OFFL)
+              از سال ۲۰۱۸ به بعد توسعه یافته. در بازه زمانی انتخابی کاربر، میانگین زمانی را محاسبه کرده و به‌صورت
+              نقشه‌ها و نمودارهای تعاملی نمایش می‌دهد.
+            </p>
+
+            <div class="cta">
+              <a class="btn primary" href="https://attarbashian.users.earthengine.app/view/airsat" target="_blank" rel="noopener">
+                ورود به نسخه فارسی
+              </a>
+
+              <a class="btn" href="https://attarbashian.users.earthengine.app/view/eairsat" target="_blank" rel="noopener">
+                نسخه انگلیسی
+              </a>
+
+              <a class="btn ghost" href="https://github.com/Attarbashian/AirSat" target="_blank" rel="noopener">
+                مخزن گیت‌هاب
+              </a>
+
+              <a class="btn" href="https://doi.org/10.5281/zenodo.185525599" target="_blank" rel="noopener" aria-label="DOI">
+                <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.185525599.svg" alt="DOI" style="height:18px; width:auto;">
+              </a>
+
+              <a class="btn" href="mailto:attarbashian@gmail.com">
+                تماس
+              </a>
+            </div>
+
+            <div class="meta-row">
+              <span>طراحی و پیاده‌سازی: <b>وحید عطارباشیان</b></span>
+              <span>•</span>
+              <span>بخشی از پژوهش دکتری</span>
+            </div>
+          </div>
         </div>
 
-        <p class="sub" style="margin-top:14px;">
-          Designed, developed, and implemented entirely by <b>Vahid Attarbashian</b>
-          <span style="opacity:.75;">(part of a broader PhD research project)</span>
-        </p>
+        <div class="shot" aria-label="Preview">
+          <img src="./AirSat.jpg" alt="AirSat preview" />
+          <div class="cap" id="shotCap">Preview • AirSat dashboard / documentation cover</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="section fadeIn" id="overview">
+      <h2 id="secOverviewTitle">Overview</h2>
+      <p id="secOverviewDesc">Scope, pollutants, and what the system computes and visualizes.</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3><span id="card1Title">Pollutants covered</span></h3>
+          <p id="card1Desc">NO₂, SO₂, CO, O₃, HCHO, CH₄, and UV Aerosol Index (Sentinel-5P).</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="card2Title">Time-window means</span></h3>
+          <p id="card2Desc">Compute temporal means for selected windows (7d, 30d, last 3 months, year, or custom range).</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="card3Title">Hotspots & province view</span></h3>
+          <p id="card3Desc">Hotspot maps for the whole country or each province separately.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="card4Title">Maps, charts, and downloads</span></h3>
+          <p id="card4Desc">Maps + charts plus direct downloads of GeoTIFF (raw) and PNG (color maps).</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="card5Title">Data source</span></h3>
+          <p id="card5Desc">Sentinel-5P (Level-3, OFFL), 2018–present. Temporal averaging over user-selected windows.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="card6Title">Intended use</span></h3>
+          <p id="card6Desc">Designed for trends, hotspots, and relative comparisons—complementary to ground stations and models.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section fadeIn" id="features">
+      <h2 id="secFeaturesTitle">Features</h2>
+      <p id="secFeaturesDesc">Analysis modes, comparisons, and scientific notes about units and gaps.</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3><span id="feat1Title">Dynamic mean maps</span></h3>
+          <p id="feat1Desc">7 days, 30 days, last 3 months, current year, or custom time range.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="feat2Title">Provincial comparison</span></h3>
+          <p id="feat2Desc">Bar chart comparison of provincial mean values over the selected period.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="feat3Title">Time series & annual mode</span></h3>
+          <p id="feat3Desc">For any province: mean per image or mean per year comparisons.</p>
+        </div>
+
+        <div class="card">
+          <h3><span id="feat4Title">Downloads</span></h3>
+          <p id="feat4Desc">Direct download of GeoTIFF (raw) and PNG (color maps) for analysis/reporting.</p>
+        </div>
       </div>
 
-      <div class="shot">
-        <img src="./AirSat.jpg" alt="AirSat preview image" />
+      <details>
+        <summary id="unitsTitle">About units (important)</summary>
+        <div class="details-body" id="unitsBody">
+          For most pollutants, Sentinel-5P provides column densities in mol/m² (vertical column amount), not surface concentration.
+          Converting to ppm or µg/m³ requires additional information and is not performed internally in this version.
+          Methane (CH₄) is shown as dry-air mole fraction in ppb as defined by the Sentinel-5P CH₄ product.
+        </div>
+      </details>
+
+      <details>
+        <summary id="gapsTitle">Why do some areas show data gaps (“holes”)?</summary>
+        <div class="details-body" id="gapsBody">
+          QA masking can remove low-confidence pixels (clouds, geometry, retrieval issues, orbit edges), producing patchy patterns.
+          Expanding the time window may improve coverage via temporal averaging.
+        </div>
+      </details>
+
+      <details>
+        <summary id="noteTitle">Important note</summary>
+        <div class="details-body" id="noteBody">
+          AirSat complements ground-based monitoring and numerical models, not a replacement.
+          It is intended for trends, large-scale patterns, hotspots, and relative differences—rather than legal compliance.
+        </div>
+      </details>
+    </section>
+
+    <!-- CITE -->
+    <section class="section fadeIn" id="cite">
+      <h2 id="secCiteTitle">Cite / Reference</h2>
+      <p id="secCiteDesc">Use the DOI for citations. The paper can be added later when published.</p>
+
+      <div class="grid">
+        <div class="card">
+          <h3><span id="cite1Title">Zenodo DOI (Versioned)</span></h3>
+          <p id="cite1Desc">Recommended citation for v1.0.0.</p>
+
+          <div class="row">
+            <a class="btn small" href="https://doi.org/10.5281/zenodo.185525599" target="_blank" rel="noopener">
+              <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.185525599.svg" alt="DOI" style="height:18px; width:auto;">
+            </a>
+            <a class="btn small" href="https://doi.org/10.5281/zenodo.185525599" target="_blank" rel="noopener">Open on Zenodo</a>
+          </div>
+
+          <div class="citebox mono" id="citeText">
+Attarbashian, V. (2026). AirSat: Satellite-based air pollution monitoring system for Iran (Version 1.0.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.185525599
+          </div>
+
+          <div class="row">
+            <button class="btn small" type="button" id="btnCopyCite">Copy citation</button>
+            <a class="btn small" href="mailto:attarbashian@gmail.com">Email author</a>
+          </div>
+
+          <div class="hint" id="paperHint">
+            Paper: forthcoming. Once published, we will add the full article reference here.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><span id="cite2Title">BibTeX (for LaTeX)</span></h3>
+          <p id="cite2Desc">You can paste this in your .bib file.</p>
+
+          <div class="citebox mono" id="bibtexText">
+@software{Attarbashian_AirSat_2026,
+  author  = {Attarbashian, Vahid},
+  title   = {AirSat: Satellite-based Air Pollution Monitoring System for Iran},
+  version = {1.0.0},
+  year    = {2026},
+  publisher = {Zenodo},
+  doi     = {10.5281/zenodo.185525599},
+  url     = {https://doi.org/10.5281/zenodo.185525599}
+}
+          </div>
+
+          <div class="row">
+            <button class="btn small" type="button" id="btnCopyBib">Copy BibTeX</button>
+            <a class="btn small" href="https://github.com/Attarbashian/AirSat" target="_blank" rel="noopener">GitHub</a>
+          </div>
+
+          <div class="hint" id="cite2Hint">
+            Tip: If you create future releases, Zenodo will mint a new DOI per version automatically.
+          </div>
+        </div>
       </div>
-    </header>
+    </section>
 
-    <div class="grid">
-      <section id="english" class="card">
-        <h2>🇬🇧 English Overview</h2>
-        <p>AirSat enables users to:</p>
-        <ul>
-          <li>Explore nationwide spatial pollution patterns</li>
-          <li>Analyze temporal changes in pollutants (AOD, CO, SO₂, NO₂)</li>
-          <li>Compare pollution across regions, provinces, and urban areas</li>
-          <li>View interactive satellite-based maps and visual layers</li>
-          <li>Observe long-term atmospheric behavior</li>
-          <li>Work entirely through cloud-based processing (no local hardware)</li>
-        </ul>
-      </section>
+    <!-- ABOUT -->
+    <section class="section fadeIn" id="about">
+      <h2 id="secAboutTitle">About</h2>
 
-      <section class="card">
-        <h2>✨ Key Features</h2>
-        <ul>
-          <li>🛰 Multi-satellite data integration (Sentinel-5P, MODIS, Landsat, Sentinel-2)</li>
-          <li>🗺 Interactive map-based dashboard</li>
-          <li>📊 Time-series and trend analysis</li>
-          <li>🔍 Pollution hotspot detection</li>
-          <li>🌐 Fully bilingual interface (EN / FA)</li>
-          <li>⚡ Cloud-native architecture</li>
-          <li>📡 Continuous updates as new satellite imagery becomes available</li>
-          <li>💨 Support for AOD, CO, SO₂, NO₂ analysis across all Iran</li>
-        </ul>
-      </section>
-
-      <section id="persian" class="card fa">
-        <h2>🇮🇷 نسخه فارسی</h2>
+      <div class="langBlock active" id="aboutEN">
         <p>
-          ایرسات یک سامانه تحت وب برای نمایش و تحلیل آلاینده‌های جوی در <b>سراسر ایران</b> است.
-          این سامانه داده‌های Sentinel-5P را از ابتدای مأموریت تا امروز پردازش کرده و نتایج را با نقشه‌های تعاملی و ابزارهای تحلیلی ارائه می‌کند.
+          AirSat is designed, developed, and implemented entirely by <b>Vahid Attarbashian</b> as part of a broader PhD research project.
+          It is built on Sentinel-5P (Level-3, OFFL) data from 2018 onwards and focuses on national-scale monitoring, hotspot detection,
+          provincial comparisons, and temporal analysis of atmospheric pollutants over Iran.
         </p>
-        <h3 style="margin:12px 0 6px;">این سامانه امکان:</h3>
-        <ul>
-          <li>تحلیل مکانی و زمانی آلاینده‌ها در سطح کشور</li>
-          <li>بررسی تغییرات بلندمدت آلودگی</li>
-          <li>مقایسه آلودگی بین استان‌ها و شهرها</li>
-          <li>نمایش نقشه‌ها و لایه‌های تعاملی</li>
-          <li>پردازش ابری بدون نیاز به سخت‌افزار محلی</li>
-        </ul>
-      </section>
+      </div>
 
-      <section class="card fa">
-        <h2>✨ ویژگی‌ها</h2>
-        <ul>
-          <li>🛰 داده‌های چندماهواره‌ای</li>
-          <li>🗺 نقشه‌ها و لایه‌های تعاملی</li>
-          <li>📊 تحلیل روند زمانی</li>
-          <li>🔍 شناسایی نقاط داغ آلودگی</li>
-          <li>🌐 رابط کاربری دو‌زبانه</li>
-          <li>⚡ پردازش سریع و ابری</li>
-          <li>💨 پشتیبانی از آلاینده‌های AOD، CO، SO₂، NO₂ در سطح ملی</li>
-        </ul>
+      <div class="langBlock fa" id="aboutFA">
+        <p>
+          ایرسات به‌صورت کامل توسط <b>وحید عطارباشیان</b> طراحی، توسعه و پیاده‌سازی شده و بخشی از پژوهش دکتری است.
+          سامانه بر داده‌های Sentinel-5P (Level-3, OFFL) از سال ۲۰۱۸ به بعد تکیه دارد و بر پایش ملی، شناسایی نقاط داغ،
+          مقایسه استانی و تحلیل‌های زمانی آلاینده‌های جوی ایران تمرکز می‌کند.
+        </p>
+      </div>
 
-        <div class="btns" style="margin-top:12px;">
-          <a class="btn primary" href="https://attarbashian.users.earthengine.app/view/airsat" target="_blank" rel="noopener">
-            ورود به نسخه فارسی
-          </a>
-          <a class="btn" href="mailto:attarbashian@gmail.com">تماس</a>
+      <div class="grid" style="margin-top:12px;">
+        <div class="card">
+          <h3><span id="nextTitle">Suggested next</span></h3>
+          <p id="nextDesc">Recommended upgrades to improve discoverability and academic readiness.</p>
+          <ul class="list" id="nextList">
+            <li>Add a screenshot gallery to increase trust and clarity.</li>
+            <li>Add a short “Methodology” section describing QA masking and aggregation.</li>
+            <li>Add paper reference when published (or preprint link).</li>
+          </ul>
         </div>
-      </section>
-    </div>
+
+        <div class="card">
+          <h3><span id="contactTitle">Contact</span></h3>
+          <p id="contactDesc">For collaboration, feedback, or academic inquiries:</p>
+          <div class="row">
+            <a class="btn small" href="mailto:attarbashian@gmail.com">attarbashian@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <footer>
-      <div><b>Made with ❤️ for Iran</b></div>
-      <div style="margin-top:6px;">© AirSat — Vahid Attarbashian</div>
+      <div><b id="footerMade">Made with ❤️ for Iran</b></div>
+      <div style="margin-top:6px;" id="footerCopy">© AirSat — Vahid Attarbashian</div>
     </footer>
   </div>
+
+  <div class="toast" id="toast">Copied</div>
+
+  <script>
+    (function(){
+      const DOI = "10.5281/zenodo.185525599";
+      const DOI_URL = "https://doi.org/" + DOI;
+
+      const btnEN = document.getElementById('btnEN');
+      const btnFA = document.getElementById('btnFA');
+
+      const drawer = document.getElementById('drawer');
+      const menuBtn = document.getElementById('menuBtn');
+
+      const toast = document.getElementById('toast');
+      function showToast(msg){
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 1100);
+      }
+
+      const blocks = {
+        EN: [document.getElementById('blockEN'), document.getElementById('aboutEN')],
+        FA: [document.getElementById('blockFA'), document.getElementById('aboutFA')]
+      };
+
+      const i18n = {
+        EN: {
+          brandSub: "Satellite air quality monitoring (Iran)",
+          badgeText: "Nationwide, satellite-driven • Built on Google Earth Engine",
+          navOverview: "Overview",
+          navFeatures: "Features",
+          navDemos: "Live demos",
+          navCite: "Cite",
+          navAbout: "About",
+          drawerOverview: "Overview",
+          drawerFeatures: "Features",
+          drawerDemos: "Live demos",
+          drawerCite: "Cite",
+          drawerAbout: "About",
+          shotCap: "Preview • AirSat dashboard / documentation cover",
+
+          secOverviewTitle: "Overview",
+          secOverviewDesc: "Scope, pollutants, and what the system computes and visualizes.",
+          card1Title: "Pollutants covered",
+          card1Desc: "NO₂, SO₂, CO, O₃, HCHO, CH₄, and UV Aerosol Index (Sentinel-5P).",
+          card2Title: "Time-window means",
+          card2Desc: "Compute temporal means for selected windows (7d, 30d, last 3 months, year, or custom range).",
+          card3Title: "Hotspots & province view",
+          card3Desc: "Hotspot maps for the whole country or each province separately.",
+          card4Title: "Maps, charts, and downloads",
+          card4Desc: "Maps + charts plus direct downloads of GeoTIFF (raw) and PNG (color maps).",
+          card5Title: "Data source",
+          card5Desc: "Sentinel-5P (Level-3, OFFL), 2018–present. Temporal averaging over user-selected windows.",
+          card6Title: "Intended use",
+          card6Desc: "Designed for trends, hotspots, and relative comparisons—complementary to ground stations and models.",
+
+          secFeaturesTitle: "Features",
+          secFeaturesDesc: "Analysis modes, comparisons, and scientific notes about units and gaps.",
+          feat1Title: "Dynamic mean maps",
+          feat1Desc: "7 days, 30 days, last 3 months, current year, or custom time range.",
+          feat2Title: "Provincial comparison",
+          feat2Desc: "Bar chart comparison of provincial mean values over the selected period.",
+          feat3Title: "Time series & annual mode",
+          feat3Desc: "For any province: mean per image or mean per year comparisons.",
+          feat4Title: "Downloads",
+          feat4Desc: "Direct download of GeoTIFF (raw) and PNG (color maps) for analysis/reporting.",
+
+          unitsTitle: "About units (important)",
+          unitsBody: "For most pollutants, Sentinel-5P provides column densities in mol/m² (vertical column amount), not surface concentration. Converting to ppm or µg/m³ requires additional information and is not performed internally in this version. Methane (CH₄) is shown as dry-air mole fraction in ppb as defined by the Sentinel-5P CH₄ product.",
+          gapsTitle: "Why do some areas show data gaps (“holes”)?",
+          gapsBody: "QA masking can remove low-confidence pixels (clouds, geometry, retrieval issues, orbit edges), producing patchy patterns. Expanding the time window may improve coverage via temporal averaging.",
+          noteTitle: "Important note",
+          noteBody: "AirSat complements ground-based monitoring and numerical models, not a replacement. It is intended for trends, large-scale patterns, hotspots, and relative differences—rather than legal compliance.",
+
+          secCiteTitle: "Cite / Reference",
+          secCiteDesc: "Use the DOI for citations. The paper can be added later when published.",
+          cite1Title: "Zenodo DOI (Versioned)",
+          cite1Desc: "Recommended citation for v1.0.0.",
+          btnCopyCite: "Copy citation",
+          paperHint: "Paper: forthcoming. Once published, we will add the full article reference here.",
+          cite2Title: "BibTeX (for LaTeX)",
+          cite2Desc: "You can paste this in your .bib file.",
+          btnCopyBib: "Copy BibTeX",
+          cite2Hint: "Tip: If you create future releases, Zenodo will mint a new DOI per version automatically.",
+
+          secAboutTitle: "About",
+          nextTitle: "Suggested next",
+          nextDesc: "Recommended upgrades to improve discoverability and academic readiness.",
+          nextList: [
+            "Add a screenshot gallery to increase trust and clarity.",
+            "Add a short “Methodology” section describing QA masking and aggregation.",
+            "Add paper reference when published (or preprint link)."
+          ],
+          contactTitle: "Contact",
+          contactDesc: "For collaboration, feedback, or academic inquiries:",
+          footerMade: "Made with ❤️ for Iran",
+          footerCopy: "© AirSat — Vahid Attarbashian",
+          toastCopied: "Copied"
+        },
+
+        FA: {
+          brandSub: "پایش ماهواره‌ای آلودگی هوا (ایران)",
+          badgeText: "پوشش ملی، مبتنی بر ماهواره • توسعه‌یافته بر بستر Google Earth Engine",
+          navOverview: "معرفی",
+          navFeatures: "ویژگی‌ها",
+          navDemos: "نسخه‌های آنلاین",
+          navCite: "ارجاع",
+          navAbout: "درباره",
+          drawerOverview: "معرفی",
+          drawerFeatures: "ویژگی‌ها",
+          drawerDemos: "نسخه‌های آنلاین",
+          drawerCite: "ارجاع",
+          drawerAbout: "درباره",
+          shotCap: "پیش‌نمایش • داشبورد/کاور مستندات ایرسات",
+
+          secOverviewTitle: "معرفی",
+          secOverviewDesc: "دامنه، آلاینده‌ها و خروجی‌های سامانه (محاسبه و نمایش).",
+          card1Title: "آلاینده‌های پوشش‌داده‌شده",
+          card1Desc: "NO₂، SO₂، CO، O₃، HCHO، CH₄ و شاخص UV Aerosol (Sentinel-5P).",
+          card2Title: "میانگین‌گیری زمانی پویا",
+          card2Desc: "میانگین زمانی برای بازه‌های ۷ روزه، ۳۰ روزه، ۳ ماه اخیر، سال جاری یا بازه دلخواه.",
+          card3Title: "نقاط داغ و نمایش استانی",
+          card3Desc: "نقشه نقاط داغ برای کل کشور یا هر استان به‌صورت جداگانه.",
+          card4Title: "نقشه، نمودار و دانلود",
+          card4Desc: "نقشه‌ها و نمودارها + دانلود مستقیم GeoTIFF (خام) و PNG (نقشه رنگی).",
+          card5Title: "منبع داده",
+          card5Desc: "Sentinel-5P (Level-3, OFFL)، از ۲۰۱۸ تا امروز. میانگین‌گیری زمانی روی بازه انتخابی کاربر.",
+          card6Title: "کاربرد پیشنهادی",
+          card6Desc: "برای روندها، نقاط داغ و مقایسه نسبی—مکمل ایستگاه‌های زمینی و مدل‌ها.",
+
+          secFeaturesTitle: "ویژگی‌ها",
+          secFeaturesDesc: "حالت‌های تحلیل، مقایسه‌ها و نکات علمی درباره واحدها و گپ‌های داده.",
+          feat1Title: "نقشه‌های میانگین پویا",
+          feat1Desc: "۷ روز، ۳۰ روز، ۳ ماه اخیر، سال جاری یا بازه زمانی دلخواه.",
+          feat2Title: "مقایسه استانی",
+          feat2Desc: "مقایسه نموداری (ستونی) میانگین استان‌ها در بازه انتخابی.",
+          feat3Title: "سری زمانی و مقایسه سالانه",
+          feat3Desc: "برای هر استان: میانگین هر تصویر یا میانگین سالانه.",
+          feat4Title: "دانلود خروجی‌ها",
+          feat4Desc: "دانلود مستقیم GeoTIFF و PNG برای تحلیل و گزارش‌نویسی.",
+
+          unitsTitle: "درباره واحدها (خیلی مهم)",
+          unitsBody: "برای اغلب آلاینده‌ها، Sentinel-5P «چگالی ستونی» را در واحد mol/m² ارائه می‌دهد (مقدار کل در ستون عمودی هوا)، نه غلظت سطحی. تبدیل به ppm یا µg/m³ نیازمند اطلاعات تکمیلی است و در این نسخه انجام نمی‌شود. متان (CH₄) مطابق محصول Sentinel-5P در واحد ppb (dry-air mole fraction) نمایش داده می‌شود.",
+          gapsTitle: "چرا بعضی مناطق گپ داده یا «حفره» دارند؟",
+          gapsBody: "QA masking پیکسل‌های کم‌اطمینان را حذف می‌کند (ابر، هندسه، خطای بازیابی، لبه مدار) و الگوی تکه‌تکه ایجاد می‌شود. افزایش بازه زمانی ممکن است پوشش را بهتر کند.",
+          noteTitle: "نکته مهم",
+          noteBody: "ایرسات مکمل پایش زمینی و مدل‌های عددی است، نه جایگزین. هدف آن روندها، الگوهای بزرگ‌مقیاس، نقاط داغ و تفاوت‌های نسبی است، نه تصمیم‌های مقرراتی.",
+
+          secCiteTitle: "ارجاع / رفرنس‌دهی",
+          secCiteDesc: "برای ارجاع علمی از DOI استفاده کنید. بعداً با چاپ مقاله، رفرنس مقاله اضافه می‌شود.",
+          cite1Title: "DOI زنودو (نسخه‌دار)",
+          cite1Desc: "رفرنس پیشنهادی برای نسخه ۱.۰.۰.",
+          btnCopyCite: "کپی ارجاع",
+          paperHint: "مقاله: در دست انتشار. پس از چاپ، رفرنس کامل اینجا اضافه می‌شود.",
+          cite2Title: "BibTeX (برای LaTeX)",
+          cite2Desc: "این را در فایل .bib قرار دهید.",
+          btnCopyBib: "کپی BibTeX",
+          cite2Hint: "نکته: با هر Release جدید، Zenodo یک DOI جدید برای همان نسخه صادر می‌کند.",
+
+          secAboutTitle: "درباره",
+          nextTitle: "قدم‌های پیشنهادی بعدی",
+          nextDesc: "پیشنهادهایی برای دیده‌شدن بهتر و آمادگی آکادمیک پروژه.",
+          nextList: [
+            "یک گالری اسکرین‌شات اضافه کنید تا اعتماد و شفافیت بیشتر شود.",
+            "یک بخش روش‌شناسی کوتاه درباره QA و میانگین‌گیری اضافه کنید.",
+            "پس از چاپ مقاله (یا پیش‌چاپ)، لینک و رفرنس را اضافه کنید."
+          ],
+          contactTitle: "تماس",
+          contactDesc: "برای همکاری، بازخورد یا امور پژوهشی:",
+          footerMade: "ساخته‌شده با ❤️ برای ایران",
+          footerCopy: "© AirSat — Vahid Attarbashian",
+          toastCopied: "کپی شد"
+        }
+      };
+
+      function applyStaticText(lang){
+        const dict = i18n[lang];
+
+        const ids = [
+          "brandSub","badgeText","navOverview","navFeatures","navDemos","navCite","navAbout",
+          "drawerOverview","drawerFeatures","drawerDemos","drawerCite","drawerAbout",
+          "shotCap",
+          "secOverviewTitle","secOverviewDesc","card1Title","card1Desc","card2Title","card2Desc",
+          "card3Title","card3Desc","card4Title","card4Desc","card5Title","card5Desc","card6Title","card6Desc",
+          "secFeaturesTitle","secFeaturesDesc","feat1Title","feat1Desc","feat2Title","feat2Desc",
+          "feat3Title","feat3Desc","feat4Title","feat4Desc",
+          "unitsTitle","unitsBody","gapsTitle","gapsBody","noteTitle","noteBody",
+          "secCiteTitle","secCiteDesc","cite1Title","cite1Desc","paperHint","cite2Title","cite2Desc","cite2Hint",
+          "secAboutTitle","nextTitle","nextDesc","contactTitle","contactDesc",
+          "footerMade","footerCopy"
+        ];
+
+        ids.forEach((id) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = dict[id];
+        });
+
+        // Next list items
+        const nextList = document.getElementById("nextList");
+        if (nextList && Array.isArray(dict.nextList)) {
+          nextList.innerHTML = "";
+          dict.nextList.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            nextList.appendChild(li);
+          });
+        }
+
+        // Button labels + toast
+        const copyC = document.getElementById("btnCopyCite");
+        if (copyC) copyC.textContent = dict.btnCopyCite;
+
+        const copyB = document.getElementById("btnCopyBib");
+        if (copyB) copyB.textContent = dict.btnCopyBib;
+
+        toast.textContent = dict.toastCopied;
+      }
+
+      function setLang(lang){
+        const isFA = lang === 'FA';
+
+        blocks.EN.forEach(el => el && el.classList.toggle('active', !isFA));
+        blocks.FA.forEach(el => el && el.classList.toggle('active', isFA));
+
+        btnEN.classList.toggle('active', !isFA);
+        btnFA.classList.toggle('active', isFA);
+        btnEN.setAttribute('aria-pressed', String(!isFA));
+        btnFA.setAttribute('aria-pressed', String(isFA));
+
+        document.documentElement.setAttribute('lang', isFA ? 'fa' : 'en');
+        document.body.classList.toggle('fa', isFA);
+
+        applyStaticText(lang);
+
+        localStorage.setItem('airsat_lang', lang);
+        const url = new URL(window.location.href);
+        url.searchParams.set('lang', lang);
+        window.history.replaceState({}, '', url.toString());
+      }
+
+      btnEN.addEventListener('click', () => setLang('EN'));
+      btnFA.addEventListener('click', () => setLang('FA'));
+
+      if(menuBtn){
+        menuBtn.addEventListener('click', () => drawer.classList.toggle('open'));
+        drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')));
+      }
+
+      async function copyText(text, okMsg, failMsg){
+        try{
+          await navigator.clipboard.writeText(text);
+          showToast(okMsg);
+        }catch(e){
+          showToast(failMsg);
+        }
+      }
+
+      const btnCopyCite = document.getElementById("btnCopyCite");
+      if(btnCopyCite){
+        btnCopyCite.addEventListener("click", () => {
+          const cite = document.getElementById("citeText")?.textContent?.trim() || "";
+          const lang = localStorage.getItem('airsat_lang') || 'EN';
+          copyText(cite, i18n[lang].toastCopied, "Copy failed");
+        });
+      }
+
+      const btnCopyBib = document.getElementById("btnCopyBib");
+      if(btnCopyBib){
+        btnCopyBib.addEventListener("click", () => {
+          const bib = document.getElementById("bibtexText")?.textContent?.trim() || "";
+          const lang = localStorage.getItem('airsat_lang') || 'EN';
+          copyText(bib, i18n[lang].toastCopied, "Copy failed");
+        });
+      }
+
+      // Init: URL param > localStorage > default EN
+      const url = new URL(window.location.href);
+      const fromUrl = url.searchParams.get('lang');
+      const fromStore = localStorage.getItem('airsat_lang');
+      const lang = (fromUrl === 'FA' || fromUrl === 'EN') ? fromUrl : (fromStore === 'FA' || fromStore === 'EN' ? fromStore : 'EN');
+      setLang(lang);
+    })();
+  </script>
 </body>
 </html>
