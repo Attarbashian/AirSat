@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use AirSat in your work, please cite it as below."
+title: "AirSat: Satellite-based Air Pollution Monitoring System for Iran"
+type: software
+
+authors:
+  - family-names: "Attarbashian"
+    given-names: "Vahid"
+    email: "attarbashian@gmail.com"
+
+abstract: >
+  AirSat is a dynamic satellite-based air pollution monitoring system for Iran,
+  built on Sentinel-5P (Level-3, OFFL) data from 2018 onwards. For a user-selected
+  time window, AirSat computes temporal means and visualizes them as maps and charts.
+  The system covers NO2, SO2, CO, O3, HCHO, methane (CH4), and the UV Aerosol Index.
+  It provides national and province-level hotspot maps, provincial comparisons,
+  time-series and annual comparison modes, and direct downloads of GeoTIFF (raw data)
+  and PNG (color maps).
+
+keywords:
+  - Air quality
+  - Remote sensing
+  - Satellite
+  - Sentinel-5P
+  - TROPOMI
+  - Iran
+  - Atmospheric pollutants
+  - Google Earth Engine
+  - Spatiotemporal analysis
+
+repository-code: "https://github.com/Attarbashian/AirSat"
+url: "https://attarbashian.github.io/AirSat/"
+
+date-released: "2026-02-08"
+
+version: "1.0.0"
+
+contact:
+  - name: "Vahid Attarbashian"
+    email: "attarbashian@gmail.com"
