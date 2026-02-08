@@ -119,8 +119,8 @@ If you use AirSat, please cite the software via the citation metadata in `CITATI
 
 ---
 
-## Citation
-If you use AirSat, please cite the software via the citation metadata in `CITATION.cff`.
+## ارجاع
+اگر از AirSat استفاده می‌کنید، لطفاً نرم‌افزار را بر اساس اطلاعات ارجاع موجود در فایل `CITATION.cff` نقل‌قول کنید.
 
 ---
 
