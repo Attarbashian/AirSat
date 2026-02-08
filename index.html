@@ -1,127 +1,270 @@
 <!doctype html>
-<html lang="fa">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AirSat Documentation</title>
+  <title>AirSat — Satellite-Based Air Quality Monitoring (Iran)</title>
+  <meta name="description" content="AirSat is a satellite-driven platform for monitoring and analyzing air pollution across Iran using Sentinel-5P and Google Earth Engine. Bilingual (EN/FA)." />
 
-  <!-- Google Search Console verification -->
+  <!-- Search Console (already verified; keep if you want) -->
   <meta name="google-site-verification" content="tOP_Xt49kmM6PbEaEkpnwRIb9jQ1bvMHb_bThp8Fv2I" />
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="AirSat — Satellite-Based Air Quality Monitoring" />
+  <meta property="og:description" content="Interactive satellite-based air quality monitoring across Iran. Built on Google Earth Engine. EN/FA." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="AirSat.jpg" />
+
+  <!-- Vazirmatn (Persian) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.7; margin: 0; }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 28px 18px; }
-    .center { text-align: center; }
-    .nav a { margin: 0 10px; text-decoration: none; }
-    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin: 16px 0; }
-    h1,h2,h3 { line-height: 1.25; }
-    .muted { opacity: .85; }
-    ul { margin-top: 8px; }
-    img.hero { max-width: 500px; width: 100%; height: auto; border-radius: 12px; }
-    code { background: #f6f8fa; padding: 2px 6px; border-radius: 6px; }
+    :root{
+      --bg: #0b1220;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --border: rgba(255,255,255,.14);
+      --shadow: 0 20px 60px rgba(0,0,0,.45);
+      --radius: 16px;
+      --max: 1040px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color: var(--text);
+      background:
+        radial-gradient(900px 420px at 20% 0%, rgba(56,189,248,.18), transparent 60%),
+        radial-gradient(900px 420px at 80% 10%, rgba(34,197,94,.14), transparent 55%),
+        radial-gradient(700px 380px at 50% 80%, rgba(168,85,247,.10), transparent 60%),
+        var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.7;
+    }
+
+    a{ color: inherit; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 28px 18px 60px; }
+
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding: 10px 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .dot{ width:10px; height:10px; border-radius:50%; background: rgba(56,189,248,.95); box-shadow: 0 0 22px rgba(56,189,248,.75); }
+    .brand b{ letter-spacing:.2px; }
+
+    .lang{
+      display:flex; gap:10px; align-items:center;
+      font-size: 14px; color: var(--muted);
+    }
+    .lang a{ text-decoration:none; padding:6px 10px; border-radius:999px; border:1px solid transparent; }
+    .lang a:hover{ border-color: var(--border); background: rgba(255,255,255,.05); color: var(--text); }
+
+    header{ margin-top: 28px; display:grid; grid-template-columns: 1.2fr .8fr; gap: 22px; align-items:center; }
+    @media (max-width: 900px){ header{ grid-template-columns: 1fr; } }
+
+    .hero{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+    .kicker{ color: var(--muted); font-size: 14px; }
+    h1{ margin: 8px 0 10px; font-size: clamp(28px, 4vw, 44px); line-height: 1.15; }
+    .sub{ color: var(--muted); margin: 0 0 16px; max-width: 65ch; }
+
+    .btns{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 14px; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      text-decoration:none;
+      background: rgba(255,255,255,.06);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      font-weight: 600;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.10); }
+    .btn.primary{ background: rgba(56,189,248,.18); border-color: rgba(56,189,248,.35); }
+    .btn.primary:hover{ background: rgba(56,189,248,.24); }
+
+    .shot{
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      border-radius: var(--radius);
+      padding: 10px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .shot img{ width:100%; height:auto; display:block; border-radius: 12px; }
+
+    .grid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card{
+      grid-column: span 6;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding: 16px;
+      backdrop-filter: blur(10px);
+    }
+    @media (max-width: 900px){ .card{ grid-column: span 12; } }
+
+    .card h2{ margin: 0 0 8px; font-size: 18px; }
+    .card p{ margin: 0; color: var(--muted); }
+    ul{ margin: 10px 0 0; padding-left: 18px; color: var(--muted); }
+    li{ margin: 4px 0; }
+
+    footer{
+      margin-top: 26px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align:center;
+    }
+
+    /* Persian section */
+    .fa{
+      font-family: "Vazirmatn", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      direction: rtl;
+      text-align: right;
+    }
+    .fa h2, .fa h3{ letter-spacing: 0; }
+    .fa ul{ padding-right: 18px; padding-left: 0; }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="center">
-      <img class="hero" src="./AirSat.jpg" alt="AirSat" />
-      <h1 style="margin-bottom:6px;">AirSat Documentation</h1>
-      <div class="nav muted">
-        <a href="#english">🇬🇧 English</a> |
+    <div class="topbar">
+      <a class="brand" href="#top">
+        <span class="dot"></span>
+        <b>AirSat</b>
+      </a>
+
+      <nav class="lang">
+        <a href="#english">🇬🇧 English</a>
         <a href="#persian">🇮🇷 فارسی</a>
-      </div>
+      </nav>
     </div>
 
-    <hr style="margin:24px 0;" />
+    <header id="top">
+      <div class="hero">
+        <div class="kicker">Satellite-Based Air Quality Monitoring Platform</div>
+        <h1>AirSat — Interactive air pollution monitoring across Iran</h1>
+        <p class="sub">
+          AirSat is a nationwide satellite-driven platform for visualizing and analyzing atmospheric pollutants
+          across all regions of Iran. Built on Google Earth Engine and Sentinel-5P.
+        </p>
 
-    <section id="english" class="card">
-      <h2>🇬🇧 English Version</h2>
-      <h1>AirSat</h1>
-      <h3 class="muted">Satellite-Based Air Quality Monitoring Platform</h3>
-      <p><b>Designed, developed, and implemented entirely by <i>Vahid Attarbashian</i></b><br/>
-      <span class="muted">(part of a broader PhD research project)</span></p>
+        <div class="btns">
+          <a class="btn primary" href="https://attarbashian.users.earthengine.app/view/eairsat" target="_blank" rel="noopener">
+            Live Demo (English)
+          </a>
+          <a class="btn" href="https://attarbashian.users.earthengine.app/view/airsat" target="_blank" rel="noopener">
+            نسخه آنلاین (فارسی)
+          </a>
+          <a class="btn" href="https://github.com/Attarbashian/AirSat" target="_blank" rel="noopener">
+            GitHub Repository
+          </a>
+        </div>
 
-      <p>
-        AirSat is a nationwide satellite-driven platform for visualizing and analyzing atmospheric pollutants across
-        <b>all regions of Iran</b>. The system processes Sentinel-5P satellite data <b>from the beginning of the mission up to the present</b>
-        and presents the results through fully interactive maps and analytical tools.
-      </p>
+        <p class="sub" style="margin-top:14px;">
+          Designed, developed, and implemented entirely by <b>Vahid Attarbashian</b>
+          <span style="opacity:.75;">(part of a broader PhD research project)</span>
+        </p>
+      </div>
 
-      <h3>🔗 Live Demo (English)</h3>
-      <p><a href="https://attarbashian.users.earthengine.app/view/eairsat" target="_blank" rel="noopener">
-        https://attarbashian.users.earthengine.app/view/eairsat
-      </a></p>
+      <div class="shot">
+        <img src="./AirSat.jpg" alt="AirSat preview image" />
+      </div>
+    </header>
 
-      <h3>🌍 Overview</h3>
-      <ul>
-        <li>Explore nationwide spatial pollution patterns</li>
-        <li>Analyze temporal changes in pollutants (AOD, CO, SO₂, NO₂)</li>
-        <li>Compare pollution across regions, provinces, and urban areas</li>
-        <li>View interactive satellite-based maps and visual layers</li>
-        <li>Observe long-term atmospheric behavior</li>
-        <li>Work entirely through cloud-based processing (no local hardware)</li>
-      </ul>
+    <div class="grid">
+      <section id="english" class="card">
+        <h2>🇬🇧 English Overview</h2>
+        <p>AirSat enables users to:</p>
+        <ul>
+          <li>Explore nationwide spatial pollution patterns</li>
+          <li>Analyze temporal changes in pollutants (AOD, CO, SO₂, NO₂)</li>
+          <li>Compare pollution across regions, provinces, and urban areas</li>
+          <li>View interactive satellite-based maps and visual layers</li>
+          <li>Observe long-term atmospheric behavior</li>
+          <li>Work entirely through cloud-based processing (no local hardware)</li>
+        </ul>
+      </section>
 
-      <p>Built on <b>Google Earth Engine</b>, it provides scalable, fast, and reproducible workflows for atmospheric studies.</p>
+      <section class="card">
+        <h2>✨ Key Features</h2>
+        <ul>
+          <li>🛰 Multi-satellite data integration (Sentinel-5P, MODIS, Landsat, Sentinel-2)</li>
+          <li>🗺 Interactive map-based dashboard</li>
+          <li>📊 Time-series and trend analysis</li>
+          <li>🔍 Pollution hotspot detection</li>
+          <li>🌐 Fully bilingual interface (EN / FA)</li>
+          <li>⚡ Cloud-native architecture</li>
+          <li>📡 Continuous updates as new satellite imagery becomes available</li>
+          <li>💨 Support for AOD, CO, SO₂, NO₂ analysis across all Iran</li>
+        </ul>
+      </section>
 
-      <h3>✨ Key Features</h3>
-      <ul>
-        <li>🛰 Multi-satellite data integration (Sentinel-5P, MODIS, Landsat, Sentinel-2)</li>
-        <li>🗺 Interactive map-based dashboard</li>
-        <li>📊 Time-series and trend analysis</li>
-        <li>🔍 Pollution hotspot detection</li>
-        <li>🌐 Fully bilingual interface (EN / FA)</li>
-        <li>⚡ Cloud-native architecture</li>
-        <li>📡 Continuous updates as new satellite imagery becomes available</li>
-        <li>💨 Support for AOD, CO, SO₂, NO₂ analysis across all Iran</li>
-      </ul>
-    </section>
+      <section id="persian" class="card fa">
+        <h2>🇮🇷 نسخه فارسی</h2>
+        <p>
+          ایرسات یک سامانه تحت وب برای نمایش و تحلیل آلاینده‌های جوی در <b>سراسر ایران</b> است.
+          این سامانه داده‌های Sentinel-5P را از ابتدای مأموریت تا امروز پردازش کرده و نتایج را با نقشه‌های تعاملی و ابزارهای تحلیلی ارائه می‌کند.
+        </p>
+        <h3 style="margin:12px 0 6px;">این سامانه امکان:</h3>
+        <ul>
+          <li>تحلیل مکانی و زمانی آلاینده‌ها در سطح کشور</li>
+          <li>بررسی تغییرات بلندمدت آلودگی</li>
+          <li>مقایسه آلودگی بین استان‌ها و شهرها</li>
+          <li>نمایش نقشه‌ها و لایه‌های تعاملی</li>
+          <li>پردازش ابری بدون نیاز به سخت‌افزار محلی</li>
+        </ul>
+      </section>
 
-    <section id="persian" class="card">
-      <h2>🇮🇷 نسخه فارسی</h2>
-      <h1>ایرسات (AirSat)</h1>
-      <h3 class="muted">سامانه پایش و تحلیل آلودگی هوا بر پایه داده‌های ماهواره‌ای</h3>
-      <p><b>طراحی، توسعه و پیاده‌سازی کامل توسط <i>وحید عطارباشیان</i></b><br/>
-      <span class="muted">(بخشی از یک پژوهش گسترده‌تر در مقطع دکتری)</span></p>
+      <section class="card fa">
+        <h2>✨ ویژگی‌ها</h2>
+        <ul>
+          <li>🛰 داده‌های چندماهواره‌ای</li>
+          <li>🗺 نقشه‌ها و لایه‌های تعاملی</li>
+          <li>📊 تحلیل روند زمانی</li>
+          <li>🔍 شناسایی نقاط داغ آلودگی</li>
+          <li>🌐 رابط کاربری دو‌زبانه</li>
+          <li>⚡ پردازش سریع و ابری</li>
+          <li>💨 پشتیبانی از آلاینده‌های AOD، CO، SO₂، NO₂ در سطح ملی</li>
+        </ul>
 
-      <p>
-        ایرسات یک سامانه تحت وب برای نمایش و تحلیل آلاینده‌های جوی در <b>سراسر ایران</b> است.
-        این سامانه داده‌های ماهواره Sentinel-5P را <b>از ابتدای مأموریت ماهواره تا امروز</b> پردازش کرده
-        و نتایج را با نقشه‌های تعاملی و ابزارهای تحلیلی در اختیار کاربر قرار می‌دهد.
-      </p>
+        <div class="btns" style="margin-top:12px;">
+          <a class="btn primary" href="https://attarbashian.users.earthengine.app/view/airsat" target="_blank" rel="noopener">
+            ورود به نسخه فارسی
+          </a>
+          <a class="btn" href="mailto:attarbashian@gmail.com">تماس</a>
+        </div>
+      </section>
+    </div>
 
-      <h3>🟢 نسخه آنلاین (فارسی)</h3>
-      <p><a href="https://attarbashian.users.earthengine.app/view/airsat" target="_blank" rel="noopener">
-        https://attarbashian.users.earthengine.app/view/airsat
-      </a></p>
-
-      <h3>🌍 توضیحات</h3>
-      <ul>
-        <li>تحلیل مکانی و زمانی آلاینده‌های جوی در سطح کشور</li>
-        <li>بررسی تغییرات بلندمدت آلودگی</li>
-        <li>مقایسه آلودگی میان شهرها، استان‌ها و نواحی مختلف</li>
-        <li>تحلیل آلاینده‌هایی مانند AOD، CO، SO₂ و NO₂</li>
-        <li>ارائه ابزار برای پژوهشگران، دانشجویان، و تحلیل‌گران محیط زیست</li>
-        <li>نمایش تعاملی داده‌های ماهواره‌ای در مرورگر</li>
-      </ul>
-
-      <h3>✨ ویژگی‌ها</h3>
-      <ul>
-        <li>🛰 داده‌های چندماهواره‌ای</li>
-        <li>🗺 نقشه‌ها و لایه‌های تعاملی</li>
-        <li>📊 تحلیل روند زمانی</li>
-        <li>🔍 شناسایی نقاط داغ آلودگی</li>
-        <li>🌐 رابط کاربری دو‌زبانه</li>
-        <li>⚡ پردازش سریع و ابری</li>
-        <li>💨 پشتیبانی از آلاینده‌های AOD، CO، SO₂، NO₂ در سطح ملی</li>
-      </ul>
-
-      <p class="center" style="margin-top:18px;">
-        <b>تهیه و توسعه توسط وحید عطارباشیان</b><br/>
-        <b>Made with ❤️ for Iran</b>
-      </p>
-    </section>
+    <footer>
+      <div><b>Made with ❤️ for Iran</b></div>
+      <div style="margin-top:6px;">© AirSat — Vahid Attarbashian</div>
+    </footer>
   </div>
 </body>
 </html>
