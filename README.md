@@ -62,6 +62,10 @@ Built on **Google Earth Engine**, it provides scalable, fast, and reproducible w
 
 ---
 
+## Citation
+If you use AirSat, please cite the software via the citation metadata in `CITATION.cff`.
+
+---
 ---
 
 ## <span id="persian">🇮🇷 نسخه فارسی</span>
@@ -112,6 +116,11 @@ Built on **Google Earth Engine**, it provides scalable, fast, and reproducible w
 - 🌐 رابط کاربری دو‌زبانه  
 - ⚡ پردازش سریع و ابری  
 - 💨 پشتیبانی از آلاینده‌های AOD، CO، SO₂، NO₂ در سطح ملی  
+
+---
+
+## Citation
+If you use AirSat, please cite the software via the citation metadata in `CITATION.cff`.
 
 ---
 
