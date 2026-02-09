@@ -23,8 +23,9 @@
 The system provides interactive visualization, temporal aggregation, and direct data download  
 for major atmospheric pollutants from **2018 to present**.
 
-🌍 **Live website:** https://attarbashian.github.io/AirSat/  
-📦 **GitHub repository:** https://github.com/Attarbashian/AirSat  
+🌍 **Live website:** https://airsat.ir  
+🔗 **GitHub Pages mirror:** https://attarbashian.github.io/AirSat/  
+📦 **GitHub repository:** https://github.com/Attarbashian/AirSat 
 
 ---
 
@@ -92,13 +93,13 @@ If you use AirSat, please cite the software using the metadata provided in `CITA
 ## <span id="persian">🇮🇷 نسخه فارسی</span>
 
 ## 📘 معرفی
-**🛰 AirSat** یک سامانه پایش آلودگی هوا مبتنی بر داده‌های ماهواره‌ای است که برای ایران توسعه داده شده است.  
+🛰 ایرسات (**AirSat**) یک سامانه پایش آلودگی هوا مبتنی بر داده‌های ماهواره‌ای است که برای ایران توسعه داده شده است. 
 این سامانه از داده‌های **Sentinel-5P (TROPOMI) سطح ۳ (OFFL)** استفاده می‌کند و امکان  
 نمایش، مقایسه و دانلود آلاینده‌های جوی را از **سال ۲۰۱۸ تاکنون** فراهم می‌سازد.
 
-🌍 **وب‌سایت:** https://attarbashian.github.io/AirSat/  
-📦 **مخزن گیت‌هاب:** https://github.com/Attarbashian/AirSat  
-
+🌍 **وب‌سایت رسمی:** https://airsat.ir  
+🔗 **نسخه GitHub Pages:** https://attarbashian.github.io/AirSat/  
+📦 **مخزن گیت‌هاب:** https://github.com/Attarbashian/AirSat
 ---
 
 ## 🧪 آلاینده‌های پشتیبانی‌شده
