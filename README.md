@@ -80,7 +80,12 @@ AirSat is designed for:
 - Trend analysis
 - Large-scale spatial comparison
 
-It is **not intended** for regulatory or operational air-quality decision-making.
+AirSat is intended for research, visualization, and large-scale spatial analysis, and should not be used as a sole basis for regulatory, legal, or operational air-quality decisions.
+
+---
+
+### Citation
+If you use AirSat, please cite the software using the metadata provided in `CITATION.cff`.
 
 ---
 
@@ -149,9 +154,18 @@ It is **not intended** for regulatory or operational air-quality decision-making
 - مقایسه فضایی
 - مطالعات پژوهشی
 
-طراحی شده است و **جایگزین ایستگاه‌های زمینی یا مدل‌های عددی کیفیت هوا نیست**.
+سامانه AirSat با هدف پژوهش، نمایش و تحلیل‌های فضایی در مقیاس بزرگ توسعه یافته است و نباید به‌عنوان تنها مبنای تصمیم‌گیری‌های اجرایی، حقوقی یا مقرراتی در حوزه کیفیت هوا مورد استفاده قرار گیرد.
 
 ---
 
-## Citation
-If you use AirSat, please cite the software using the metadata provided in `CITATION.cff`.
+## ارجاع
+اگر از AirSat استفاده می‌کنید، لطفاً نرم‌افزار را بر اساس اطلاعات ارجاع موجود در فایل `CITATION.cff` نقل‌قول کنید.
+
+---
+
+<br>
+
+<p align="center">
+  <b>تهیه و توسعه توسط وحید عطارباشیان</b><br>
+  <b>Made with ❤️ for Iran</b>
+</p>
