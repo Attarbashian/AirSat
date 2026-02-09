@@ -98,7 +98,7 @@ If you use AirSat, please cite the software using the metadata provided in `CITA
 نمایش، مقایسه و دانلود آلاینده‌های جوی را از **سال ۲۰۱۸ تاکنون** فراهم می‌سازد.
 
 🌍 **وب‌سایت رسمی:** https://airsat.ir  
-🔗 **نسخه GitHub Pages:** https://attarbashian.github.io/AirSat/  
+🔗 **نسخه وب گیت‌هاب::** https://attarbashian.github.io/AirSat 
 📦 **مخزن گیت‌هاب:** https://github.com/Attarbashian/AirSat
 
 ---
