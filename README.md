@@ -29,6 +29,17 @@ for major atmospheric pollutants from **2018 to present**.
 
 ---
 
+## 🧠 Technical Implementation
+
+AirSat is implemented as a **static web application**, primarily using **HTML** with embedded **CSS** and **JavaScript** for interactivity and visualization.
+
+- 🌐 Frontend: HTML / CSS / JavaScript (static)
+- ☁ Data processing and analysis: Google Earth Engine
+- 🛰 Primary data source: Sentinel-5P (TROPOMI) Level-3 OFFL products
+- 🚀 Deployment: GitHub Pages (with a custom domain: https://airsat.ir)
+
+---
+
 ## 🧪 Pollutants Covered
 AirSat currently supports the following Sentinel-5P products:
 
@@ -100,6 +111,17 @@ If you use AirSat, please cite the software using the metadata provided in `CITA
 🌍 **وب‌سایت رسمی:** https://airsat.ir  
 🔗 **نسخه وب گیت‌هاب::** https://attarbashian.github.io/AirSat  
 📦 **مخزن گیت‌هاب:** https://github.com/Attarbashian/AirSat
+
+---
+
+## 🧠 پیاده‌سازی فنی
+
+سامانه AirSat به‌صورت یک **وب‌اپلیکیشن ایستا (Static Web Application)** توسعه داده شده است و هسته رابط کاربری آن بر پایه **HTML** به‌همراه **CSS** و **JavaScript** تعبیه‌شده برای تعامل و نمایش داده‌هاست.
+
+- 🌐 بخش نمایشی: HTML / CSS / JavaScript
+- ☁ پردازش و تحلیل داده‌ها: Google Earth Engine
+- 🛰 منبع اصلی داده: محصولات Level-3 OFFL ماهواره Sentinel-5P (TROPOMI)
+- 🚀 انتشار: GitHub Pages (با دامنه اختصاصی https://airsat.ir)
 
 ---
 
