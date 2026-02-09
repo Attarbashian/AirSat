@@ -87,6 +87,7 @@ AirSat is designed for:
 
 ## 📚 Citation
 If you use AirSat, please cite the software using the metadata provided in `CITATION.cff`.
+<a href="https://doi.org/10.5281/zenodo.18525599"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.18525599.svg" alt="DOI"></a>
 
 ---
 
@@ -161,6 +162,7 @@ If you use AirSat, please cite the software using the metadata provided in `CITA
 
 ## 📚 ارجاع
 اگر از AirSat استفاده می‌کنید، لطفاً نرم‌افزار را بر اساس اطلاعات ارجاع موجود در فایل `CITATION.cff` نقل‌قول کنید.
+<a href="https://doi.org/10.5281/zenodo.18525599"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.18525599.svg" alt="DOI"></a>
 
 ---
 
