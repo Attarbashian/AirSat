@@ -1,4 +1,5 @@
 <meta name="google-site-verification" content="tOP_Xt49kmM6PbEaEkpnwRIb9jQ1bvMHb_bThp8Fv2I" />
+
 <p align="center">
   <img src="AirSat.jpg" width="500">
 </p>
@@ -16,117 +17,141 @@
 
 ## <span id="english">🇬🇧 English Version</span>
 
-# AirSat  
-### Satellite-Based Air Quality Monitoring Platform  
-**Designed, developed, and implemented entirely by *Vahid Attarbashian***  
-(*part of a broader PhD research project*)
+### Overview
+**AirSat** is a satellite-based air pollution monitoring system developed for Iran using  
+**Sentinel-5P (TROPOMI) Level-3 OFFL** products.  
+The system provides interactive visualization, temporal aggregation, and direct data download
+for major atmospheric pollutants from **2018 to present**.
 
-AirSat is a nationwide satellite-driven platform for visualizing and analyzing atmospheric pollutants across **all regions of Iran**.  
-The system processes Sentinel-5P satellite data **from the beginning of the mission up to the present** and presents the results through fully interactive maps and analytical tools.
-
----
-
-## 🔗 Live Demo (English)
-
-<a href="https://attarbashian.users.earthengine.app/view/eairsat" target="_blank">
-  https://attarbashian.users.earthengine.app/view/eairsat
-</a>
+🌍 Live website: https://attarbashian.github.io/AirSat/  
+📦 GitHub repository: https://github.com/Attarbashian/AirSat  
 
 ---
 
-## 🌍 Overview
+### Pollutants Covered
+AirSat currently supports the following Sentinel-5P products:
 
-AirSat enables users to:
-
-- Explore **nationwide spatial pollution patterns**
-- Analyze temporal changes in pollutants (AOD, CO, SO₂, NO₂)
-- Compare pollution across regions, provinces, and urban areas
-- View interactive satellite-based maps and visual layers
-- Observe long-term atmospheric behavior
-- Work entirely through cloud-based processing (no local hardware)
-
-Built on **Google Earth Engine**, it provides scalable, fast, and reproducible workflows for atmospheric studies.
+- Nitrogen Dioxide (**NO₂**)
+- Sulfur Dioxide (**SO₂**)
+- Carbon Monoxide (**CO**)
+- Ozone (**O₃**)
+- Formaldehyde (**HCHO**)
+- Methane (**CH₄**)
+- UV Aerosol Index (**UVAI**)
 
 ---
 
-## ✨ Key Features
+### Key Features
+- Dynamic temporal averaging:
+  - 7-day mean
+  - 30-day mean
+  - Last 3 months
+  - Annual mean
+  - Custom date range
+- Nationwide and provincial-scale analysis
+- Hotspot detection and comparison charts
+- Direct download of:
+  - GeoTIFF (scientific data)
+  - PNG (visualized maps)
+- Fully bilingual interface (English / Persian)
 
-- 🛰 Multi-satellite data integration (Sentinel-5P, MODIS, Landsat, Sentinel-2)  
-- 🗺 Interactive map-based dashboard  
-- 📊 Time-series and trend analysis  
-- 🔍 Pollution hotspot detection  
-- 🌐 Fully bilingual interface (EN / FA)  
-- ⚡ Cloud-native architecture  
-- 📡 Continuous updates as new satellite imagery becomes available  
-- 💨 Support for AOD, CO, SO₂, NO₂ analysis across all Iran  
+---
+
+### Data Source
+- Satellite: Sentinel-5P (TROPOMI)
+- Product level: Level-3
+- Processing mode: OFFL
+- Platform: Google Earth Engine
+- Temporal coverage: 2018–present
 
 ---
 
-## Citation
-If you use AirSat, please cite the software via the citation metadata in `CITATION.cff`.
+### Important Notes
+- Most pollutants are provided as **vertical column densities (mol/m²)**.
+- AirSat does **not** convert satellite products to surface concentration units.
+- CH₄ is shown as dry-air mole fraction (ppb), according to the official product definition.
+- Data gaps may occur due to cloud cover, QA masking, or orbit geometry.
 
 ---
+
+### Intended Use
+AirSat is designed for:
+- Scientific visualization
+- Trend analysis
+- Large-scale spatial comparison
+
+It is **not intended** for regulatory or operational air-quality decision-making.
+
 ---
 
 ## <span id="persian">🇮🇷 نسخه فارسی</span>
 
-# ایرسات (AirSat)  
-### سامانه پایش و تحلیل آلودگی هوا بر پایه داده‌های ماهواره‌ای  
-**طراحی، توسعه و پیاده‌سازی کامل توسط *وحید عطارباشیان***  
-(*بخشی از یک پژوهش گسترده‌تر در مقطع دکتری*)
+### معرفی
+**AirSat** یک سامانه پایش آلودگی هوا مبتنی بر داده‌های ماهواره‌ای است که برای ایران توسعه داده شده است.
+این سامانه از داده‌های **Sentinel-5P (TROPOMI) سطح ۳ (OFFL)** استفاده می‌کند و امکان
+نمایش، مقایسه و دانلود آلاینده‌های جوی را از **سال ۲۰۱۸ تاکنون** فراهم می‌سازد.
 
-ایرسات یک سامانه تحت وب برای نمایش و تحلیل آلاینده‌های جوی در **سراسر ایران** است.  
-این سامانه داده‌های ماهواره Sentinel-5P را **از ابتدای مأموریت ماهواره تا امروز** پردازش کرده و نتایج را با نقشه‌های تعاملی و ابزارهای تحلیلی در اختیار کاربر قرار می‌دهد.
-
-ایرسات امکان مشاهده الگوهای مکانی آلودگی، بررسی روندهای زمانی، مقایسه نواحی مختلف  
-و تحلیل آلاینده‌هایی مانند **AOD، CO، SO₂ و NO₂** را به‌صورت ملی فراهم می‌کند.
+🌍 وب‌سایت: https://attarbashian.github.io/AirSat/  
+📦 مخزن گیت‌هاب: https://github.com/Attarbashian/AirSat  
 
 ---
 
-## 🟢 نسخه آنلاین (فارسی)
+### آلاینده‌های پشتیبانی‌شده
+در حال حاضر آلاینده‌های زیر در AirSat قابل مشاهده هستند:
 
-<a href="https://attarbashian.users.earthengine.app/view/airsat" target="_blank">
-  https://attarbashian.users.earthengine.app/view/airsat
-</a>
-
----
-
-## 🌍 توضیحات
-
-ایرسات برای این اهداف ساخته شده است:
-
-- تحلیل مکانی و زمانی آلاینده‌های جوی در سطح کشور  
-- بررسی تغییرات بلندمدت آلودگی  
-- مقایسه آلودگی میان شهرها، استان‌ها و نواحی مختلف  
-- بررسی رفتار آلاینده‌های مهم مانند AOD، CO، SO₂، NO₂  
-- ارائه ابزار کاربردی برای پژوهشگران، دانشجویان، و تحلیل‌گران محیط زیست  
-- نمایش تصویری و تعاملی داده‌های ماهواره‌ای به‌صورت مستقیم در مرورگر  
-
-این سامانه کاملاً بر بستر **Google Earth Engine** اجرا می‌شود  
-و بدون نیاز به هیچ سخت‌افزار محلی، پردازش را در ابر انجام می‌دهد.
+- دی‌اکسید نیتروژن (**NO₂**)
+- دی‌اکسید گوگرد (**SO₂**)
+- مونوکسید کربن (**CO**)
+- ازن (**O₃**)
+- فرمالدهید (**HCHO**)
+- متان (**CH₄**)
+- شاخص آئروسل فرابنفش (**UVAI**)
 
 ---
 
-## ✨ ویژگی‌ها
-
-- 🛰 داده‌های چندماهواره‌ای  
-- 🗺 نقشه‌ها و لایه‌های تعاملی  
-- 📊 تحلیل روند زمانی  
-- 🔍 شناسایی نقاط داغ آلودگی  
-- 🌐 رابط کاربری دو‌زبانه  
-- ⚡ پردازش سریع و ابری  
-- 💨 پشتیبانی از آلاینده‌های AOD، CO، SO₂، NO₂ در سطح ملی  
+### قابلیت‌ها
+- محاسبه میانگین‌های زمانی پویا:
+  - ۷ روزه
+  - ۳۰ روزه
+  - سه‌ماهه
+  - سالانه
+  - بازه زمانی دلخواه
+- تحلیل در مقیاس ملی و استانی
+- شناسایی نقاط داغ آلودگی
+- نمودارهای مقایسه‌ای
+- دانلود مستقیم داده‌ها:
+  - فایل‌های GeoTIFF
+  - تصاویر PNG
+- رابط کاربری دو‌زبانه (فارسی / انگلیسی)
 
 ---
 
-## ارجاع
-اگر از AirSat استفاده می‌کنید، لطفاً نرم‌افزار را بر اساس اطلاعات ارجاع موجود در فایل `CITATION.cff` نقل‌قول کنید.
+### منبع داده
+- ماهواره: Sentinel-5P (TROPOMI)
+- سطح داده: Level-3
+- نوع پردازش: OFFL
+- بستر پردازش: Google Earth Engine
+- پوشش زمانی: ۲۰۱۸ تاکنون
 
 ---
 
-<br>
+### نکات مهم
+- اغلب آلاینده‌ها به‌صورت **چگالی ستونی (mol/m²)** ارائه می‌شوند.
+- تبدیل به واحدهای غلظت سطحی در این سامانه انجام نمی‌شود.
+- وجود نواحی بدون داده می‌تواند به‌دلیل پوشش ابری، فیلترهای کیفی یا هندسه مدار باشد.
+- افزایش بازه زمانی معمولاً پوشش فضایی را بهبود می‌دهد.
 
-<p align="center">
-  <b>تهیه و توسعه توسط وحید عطارباشیان</b><br>
-  <b>Made with ❤️ for Iran</b>
-</p>
+---
+
+### کاربرد
+این سامانه برای:
+- تحلیل روندها
+- مقایسه فضایی
+- مطالعات پژوهشی
+
+طراحی شده است و **جایگزین ایستگاه‌های زمینی یا مدل‌های عددی کیفیت هوا نیست**.
+
+---
+
+## Citation
+If you use AirSat, please cite the software using the metadata provided in `CITATION.cff`.
